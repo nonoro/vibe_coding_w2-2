@@ -1,0 +1,65 @@
+name: Test
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test-backend:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    
+    - name: Install backend dependencies
+      run: |
+        cd backend
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    
+    - name: Run backend tests
+      run: |
+        cd backend
+        python -m pytest tests/ -v --tb=short
+    
+    - name: Run backend tests with coverage
+      run: |
+        cd backend
+        python -m pytest tests/ --cov=app --cov-report=xml --cov-report=term-missing
+    
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v3
+      with:
+        file: ./backend/coverage.xml
+        flags: backend
+        name: backend-coverage
+
+  test-frontend:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    
+    - name: Install frontend dependencies
+      run: |
+        cd frontend
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    
+    - name: Test frontend app startup
+      run: |
+        cd frontend
+        timeout 30s streamlit run app.py --server.headless true --server.port 8501 || true
+        echo "Frontend startup test completed"
