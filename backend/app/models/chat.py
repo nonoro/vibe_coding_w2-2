@@ -13,8 +13,7 @@ class ChatResponse(BaseModel):
     response: str
     status: str = "success"
     
-    # 의도적 버그: 잘못된 타입 힌트
-    def process_response(self, data: int) -> str:  # data는 실제로 str이어야 함
-        """응답 처리 메서드 - 버그 포함"""
-        # 버그: str을 int로 처리하려고 시도
-        return data + 100  # TypeError 발생 예정
+    def process_response(self, data: str) -> str:
+        """응답 처리 메서드 - 수정된 버전"""
+        # 버그 수정: 올바른 타입 힌트와 구현
+        return f"처리된 응답: {data}"
