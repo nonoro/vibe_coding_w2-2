@@ -2,6 +2,11 @@
 
 FastAPI + Streamlit + LangGraph를 사용한 AI 챗봇 프로젝트입니다.
 
+## 🆕 최신 업데이트
+- PR 테스트를 위한 업데이트
+- GitHub Actions 자동화 기능 추가
+- 자동 라벨링 및 댓글 시스템 구현
+
 ## 프로젝트 구조
 
 ```
@@ -75,3 +80,10 @@ streamlit run app.py
 - SOLID 원칙 및 Clean Architecture 적용
 - 모든 PR은 리뷰 필수
 - 테스트 코드 작성 필수
+
+## 🚀 특별 기능
+
+### AI 기반 상품 검색
+- 자연어로 상품 검색 가능
+- 실시간 웹 검색 결과 제공
+- 개인화된 추천 시스템
